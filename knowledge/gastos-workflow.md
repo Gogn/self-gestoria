@@ -65,7 +65,7 @@ Autónomo на `estimación directa` обязан вести:
 
 | Расход | Чем подтверждается |
 |---|---|
-Cuota de autónomos (RETA) | Квитанция из Seguridad Social / *Importass* |
+Cuota de autónomos (RETA) | Квитанция из Seguridad Social / *Importass*. Сводку по базам за все годы даёт *Informe integral de bases de cotización* — см. `import-previous-filings.md` §5 |
 Банковское обслуживание | Выписка по счёту |
 Проценты по кредиту на деятельность | Справка банка |
 Налоги на деятельность (не IRPF/НДС) | Квитанция |

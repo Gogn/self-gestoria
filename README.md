@@ -32,9 +32,17 @@
   отдельно**: `Modelo 130 / 303 / 100` → *Todas las gestiones* → *Consulta de
   declaraciones presentadas*. Точные пути и прямые ссылки —
   [knowledge/aeat-sede-navigation.md](knowledge/aeat-sede-navigation.md);
-- *Mis datos censales* → PDF или скриншот.
+- *Mis datos censales* → PDF или скриншот;
+- *Cartera de cuotas de IVA a compensar* → накопленный НДС-кредит. Один запрос за самый
+  поздний период выводит все предыдущие; экспорта в PDF нет — сохраняется как HTML.
 
-Положите в `my-data/history/` и скажите: **«загрузи мои прошлые декларации»**.
+Плюс из **Importass** (Seguridad Social), раздел *Tus bases de cotización*:
+
+- *Informe integral de bases de cotización* → один PDF за все годы сразу.
+
+Положите в `my-data/history/`: декларации — в подпапку по году, имена вида
+`modelo 130 - t1.pdf`; документы, не привязанные к году, — в корень. Затем скажите:
+**«загрузи мои прошлые декларации»**.
 
 Агент восстановит профиль из того, что AEAT уже принял: режим налогообложения, коды
 IAE, набор обязательных моделей, логику НДС — и извлечёт **переносимые величины**

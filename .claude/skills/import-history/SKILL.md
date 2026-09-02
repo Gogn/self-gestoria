@@ -22,9 +22,38 @@ description: Восстановить профиль налогоплатель�
    declaraciones presentadas`. Все 130, 303, 100, 390 и что там ещё окажется.
    Пути и прямые ссылки — `knowledge/aeat-sede-navigation.md`.
 2. **Datos censales** — PDF или скриншот. 🔴 Без этого режим и коды IAE придётся угадывать.
-3. Опционально: datos fiscales, статус долгов, квитанции cuota de autónomos.
+3. **Cartera de cuotas de IVA a compensar** — первоисточник по накопленному НДС-кредиту.
+   Один запрос за самый поздний период выводит все предыдущие; экспорта в PDF нет,
+   сохраняется как HTML.
+4. **Informe integral de bases de cotización** — из *Importass* (Seguridad Social),
+   раздел *Tus bases de cotización*. Один PDF за все годы: месяцы *alta* в RETA и базы
+   по месяцам. ⚠️ Это базы, не уплаченные cuotas — точные суммы из квитанций.
+5. Опционально: datos fiscales, статус долгов, квитанции cuota de autónomos.
 
-Складывать в `my-data/history/`, имена вида `2026-Q1-modelo-130.pdf`.
+Складывать в `my-data/history/` по такой структуре:
+
+```
+my-data/history/
+├── 2025/
+│   ├── modelo 130 - t1.pdf
+│   ├── modelo 130 - t2.pdf
+│   ├── modelo 130 - t3.pdf
+│   ├── modelo 130 - t4.pdf
+│   ├── modelo 303 - t1.pdf
+│   ├── …
+│   ├── modelo 100.pdf
+│   └── modelo 390.pdf
+├── 2026/
+│   ├── modelo 130 - t1.pdf
+│   └── modelo 303 - t1.pdf
+├── datos-censales.pdf              ← 🔴 из Mis datos censales
+├── cartera-cuotas-iva.html        ← НДС-кредит, все периоды сразу
+└── informe-bases-cotizacion.pdf   ← базы RETA, все годы сразу
+```
+
+**Правило.** Декларации — в подпапку по году, имя `modelo NNN - tN.pdf` (годовые модели
+без суффикса квартала: `modelo 100.pdf`). Документы, которые не привязаны к одному году —
+datos censales, cartera de cuotas, informe de bases — лежат в корне `history/`.
 
 Скажи прямо: **чем больше файлов, тем меньше вопросов ты задашь.** Если есть только
 часть — работай с тем, что есть, остальное спросишь.

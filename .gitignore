@@ -11,6 +11,7 @@ my-data/
 *.xlsx
 *.xls
 *.csv
+*.html
 *.doc
 *.docx
 *.odt
