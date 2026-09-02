@@ -1,0 +1,55 @@
+# ============================================================
+#  ЛИЧНЫЕ ДАННЫЕ — НИКОГДА НЕ КОММИТИТЬ
+# ============================================================
+my-data/
+*.local.md
+*.local.yaml
+*.local.yml
+
+# Документы и выгрузки из AEAT
+*.pdf
+*.xlsx
+*.xls
+*.csv
+*.doc
+*.docx
+*.odt
+*.ods
+*.zip
+justificante*
+declaracion*
+datos-censales*
+datos-fiscales*
+
+# Скриншоты и фото документов — содержат NIF, ФИО, суммы
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.heic
+*.tiff
+*.bmp
+
+# Сертификаты, ключи и подписи (доступ к Sede Electrónica)
+*.p12
+*.pfx
+*.pem
+*.key
+*.cer
+*.crt
+*.p7s
+*.xsig
+
+# Секреты
+.env
+*.env
+.env.*
+*secret*
+*credential*
+
+# Системное
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

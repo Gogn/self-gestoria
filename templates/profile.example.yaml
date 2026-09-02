@@ -1,0 +1,92 @@
+# Профиль налогоплательщика — заполняется один раз.
+# Скопируйте в my-data/profile.yaml и заполните.
+#
+# 🔒 НЕ вписывайте сюда NIF, ФИО, IBAN, адрес. Для расчётов они не нужны.
+#
+# У каждого поля есть парное поле `<имя>_source` — происхождение значения:
+#   declared — извлечено из поданной декларации или datos censales (надёжно)
+#   inferred — выведено логически из деклараций (объяснение в inferred_notes)
+#   asked    — пользователь ответил на вопрос
+#   unknown  — не установлено, требует уточнения
+#
+# Смысл: `inferred` нельзя путать с `declared`. Вывод «клиенты вне ЕС, потому что блок
+# devengado пуст» может означать и ошибку в прошлых декларациях.
+
+profile:
+  # estimacion_directa_simplificada | estimacion_directa_normal | modulos
+  regime: estimacion_directa_simplificada
+  regime_source: declared            # ← из Mis datos censales
+
+  alta_date: 2024-03-01
+  alta_date_source: declared
+
+  iae_codes: ["763"]
+  iae_codes_source: declared         # только из datos censales, в декларациях нет
+
+  region: cataluna
+  region_source: asked
+
+  clients:
+    - country: US
+      type: legal_entity             # legal_entity | individual
+      label: "клиент 1"
+  clients_source: inferred           # ← блок IVA devengado пуст во всех 303
+                                     #   тип (юрлицо/физлицо) из декларации НЕ виден
+
+  employees: false
+  employees_source: inferred         # ← модель 111 не подавалась
+
+  business_premises_rent: false
+  business_premises_rent_source: inferred  # ← модель 115 не подавалась
+
+  home_office:
+    declared_in_036: false
+    area_percent: 0
+  home_office_source: unknown        # в декларациях нет, только datos censales
+
+  roi_vies_registered: false
+  roi_vies_registered_source: inferred     # ← модель 349 не подавалась
+
+  foreign_assets_over_50k: null
+  foreign_assets_over_50k_source: unknown  # ⚠️ неподача 720 ≠ отсутствие активов
+
+  sede_access: clave                 # clave | certificate | dnie | none
+  sede_access_source: asked
+
+  gestor_apoderamiento_active: false
+  gestor_apoderamiento_active_source: unknown  # проверять в разделе Apoderamientos
+
+# Пояснения к полям с source: inferred — на чём основан вывод
+inferred_notes:
+  clients: "Во всех импортированных 303 (2024–2026) блок IVA devengado пуст, оборот
+            отражён в справочной графе. Casilla 06 в 130 всегда 0 → испанских клиентов
+            с retención нет."
+  employees: "Модель 111 не встречается ни в одном периоде истории подач."
+
+# Набор моделей — по knowledge/00-profile-decision-tree.md,
+# сверить с перечнем обязательных моделей в Mis datos censales
+filings:
+  quarterly: [130, 303]
+  annual: [100, 390]
+  not_required: [111, 115, 349]
+  to_verify: [720, 721, 347]
+  source: declared                   # ← какие модели фактически подавались в истории
+
+# Калибровка по прошлым декларациям: номера casillas, которые реально использовались.
+# Нумерация меняется между редакциями формы — это защита от угадывания.
+calibration:
+  modelo_303_oborot_casilla: 120     # графа, в которой гестор отражал оборот вне ЕС
+  calibration_source: declared       # ← из justificante 1T 2026
+  last_verified_period: "2026-Q1"
+
+# Открытые вопросы — всё, что осталось unknown, плюс спорные моменты
+open_questions:
+  - "Клиент — юрлицо или физлицо (из декларации не видно, влияет на правила локализации)"
+  - "Заявлена ли часть жилья в 036 (для вычета suministros)"
+  - "Есть ли зарубежные активы > 50 000 € (модели 720 / 721)"
+  - "Обязана ли подаваться модель 390, или годовые данные идут через 303 за Q4"
+
+debts:
+  has_active_debt: false
+  has_active_aplazamiento: false
+  # детали — только в my-data/debts.md

@@ -1,0 +1,69 @@
+# Данные за квартал.
+# Скопируйте в my-data/<ГОД>-Q<N>/data.yaml и заполните.
+# Все суммы — числом с точкой как десятичным разделителем (в формах AEAT будет запятая).
+
+period:
+  year: 2026
+  quarter: 1                     # 1 | 2 | 3 | 4
+
+# --- ДОХОДЫ: каждый выставленный счёт за квартал -------------------------
+# ⚠️ Учитывается ДАТА СЧЁТА, а не дата поступления денег.
+income:
+  - date: 2026-01-31
+    invoice_no: "2026-001"
+    base_eur: 1823.28            # сумма без НДС
+    vat_eur: 0.00                # НДС в счёте (0 для клиентов вне ЕС B2B)
+    client_country: US
+    client_type: legal_entity
+  - date: 2026-02-28
+    invoice_no: "2026-002"
+    base_eur: 1823.28
+    vat_eur: 0.00
+    client_country: US
+    client_type: legal_entity
+  - date: 2026-03-31
+    invoice_no: "2026-003"
+    base_eur: 1823.29
+    vat_eur: 0.00
+    client_country: US
+    client_type: legal_entity
+
+# --- РАСХОДЫ: каждый деловой расход за квартал ---------------------------
+expenses:
+  - date: 2026-02-14
+    concept: "подписка на софт"
+    base_eur: 276.00
+    vat_eur: 57.96               # испанский НДС
+    has_spanish_vat: true        # → попадёт в casillas 28/29 модели 303
+    has_full_factura: true       # без полной factura вычет НДС невозможен
+    deductible_irpf: true        # → попадёт в casilla 02 модели 130
+
+  - date: 2026-01-31
+    concept: "cuota de autónomos (RETA), январь"
+    base_eur: 249.94
+    vat_eur: 0.00
+    has_spanish_vat: false       # взносы НДС не содержат
+    has_full_factura: true
+    deductible_irpf: true
+
+# --- НАКОПИТЕЛЬНЫЕ ВЕЛИЧИНЫ ---------------------------------------------
+# Берутся из justificantes предыдущих деклараций этого года.
+# Для Q1 — нули (кроме vat_credit_carried_forward, он живёт между годами).
+cumulative:
+  income_ytd_before_this_quarter: 0.00   # доход с 1 января до начала этого квартала
+  expenses_ytd_before_this_quarter: 0.00
+  modelo_130_paid_this_year: 0.00        # → casilla 05 модели 130
+  retenciones_ytd: 0.00                  # → casilla 06 модели 130
+  vat_credit_carried_forward: 371.49     # → casilla 110 модели 303
+
+# --- ОПЛАТА -------------------------------------------------------------
+payment:
+  # direct_nrc | card | domiciliacion
+  # 👉 domiciliacion — источник типовой проблемы, см. knowledge/pitfalls.md §1
+  method_130: direct_nrc
+
+# --- РАССРОЧКА (если есть) ----------------------------------------------
+# Даты платежей по aplazamiento живут отдельно от налогового календаря.
+aplazamiento_next_payment:
+  date: null
+  amount_eur: null
