@@ -98,7 +98,7 @@ calendario del contribuyente»** — а не «Presentar y consultar declaracion
 **Aplazamientos y fraccionamientos** → *Contestar requerimientos y otras gestiones* | 👉 Управление рассрочкой. **Платежи по рассрочке — только отсюда**, не через общую кнопку оплаты (см. `pitfalls.md` §3) |
 **Calendario del contribuyente** | 🔴 Официальные сроки — первоисточник. Есть формат **iCalendar** для подписки |
 **Registro electrónico** | Ответ на requerimiento, подача документов и alegaciones |
-**Certificados tributarios** | Справки о налоговом положении. Здесь же *Situación censal* |
+**Certificados tributarios** | Справки о налоговом положении: *Situación censal* и 👉 **Estar al corriente de obligaciones tributarias** (модель 01). Запрашивать можно заранее — см. `estar-al-corriente.md` |
 **Suscripción a avisos informativos** | 👉 Оповещения на email/телефон. Включить сразу |
 **Asientos registrales** | Ваши записи в электронном реестре AEAT |
 
@@ -153,6 +153,7 @@ Simulador 303 2026 (без входа) | `www2.agenciatributaria.gob.es/wlpl/A30
 Asientos registrales | `www1.agenciatributaria.gob.es/wlpl/REGD-JDIT/SvRegMisAsiIntQue` |
 Calendario del contribuyente | `sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html` |
 Calendario — iCalendar (подписка) | `sede.agenciatributaria.gob.es/Sede/en_gb/ayuda/calendario-contribuyente/icalendar.html` |
+Проверка подлинности документа по CSV | `sede.administracion.gob.es/pagSedeFront/servicios/consultaCSV.htm` |
 
 ⚠️ Ссылки с `NIFOBLIGADO=` и `nifRepresentado=` несут NIF в query-строке. Не пересылайте
 их и не сохраняйте в публичные файлы — подставляйте `[NIF]` сами.
@@ -220,7 +221,10 @@ Agencia Estatal de Administración Tributaria
   профиль и напоминаниями, но **не видят** адресованные лично вам требования: для этого
   только *Mis notificaciones*.
 - *Justificante de presentación* — единственное доказательство подачи. Сохраняйте PDF
-  каждой декларации (в `my-data/`, не в git).
+  каждой декларации (в `my-data/`, не в git). У каждого документа есть **CSV** (*Código
+  Seguro de Verificación*) — по нему подлинность проверяется на общей сервисной странице
+  госадминистрации, ссылка выше. Полезно, когда justificante прислал кто-то другой,
+  например прежний гестор.
 - Интерфейс Sede переключается на **английский** (ES / CA / GL / VA / EN в правом
   верхнем углу). Для неносителя испанского это заметно снижает цену ошибки при чтении
   формы. ⚠️ Названия casillas в переводе иногда расходятся с официальной терминологией —

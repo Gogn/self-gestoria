@@ -15,7 +15,9 @@
 **Если вы уже подавали декларации** (сами или через гестора) — большую часть этого
 вопросника можно не заполнять.
 
-Скачайте justificantes из *Sede Electrónica → Consultar declaraciones presentadas*
+Скачайте justificantes из Sede Electrónica — они лежат по каждой модели отдельно
+(`Modelo NNN → Todas las gestiones → Consulta de declaraciones presentadas`, пути в
+`knowledge/aeat-sede-navigation.md`)
 плюс PDF раздела *Mis datos censales*, положите в `my-data/history/` и скажите агенту:
 **«загрузи мои прошлые декларации»** (скилл `/import-history`).
 
@@ -42,7 +44,13 @@
 ## Часть 1. Профиль — заполняется один раз
 
 Источник большинства ответов: *Sede Electrónica → Mis datos censales*.
+Исключение — первые два пункта: их в налоговых данных нет, отвечает только пользователь.
 
+- [ ] 🔴 **Статус пребывания в Испании**: гражданство ЕС / постоянное (*larga duración*) /
+      временное разрешение / нерезидент / не знаю.
+      Если временное — **на каком основании** и **до какой даты продлевать**
+- [ ] 🔴 **Применяется ли особый режим art. 93 LIRPF** («ley Beckham»): да / нет / не знаю.
+      Он не включается сам — под него подаётся заявление. При «да» набор моделей другой
 - [ ] **Режим IRPF**: `estimación directa normal` / `estimación directa simplificada` / `módulos`
 - [ ] **Дата alta** как autónomo (влияет на льготные ставки для новых)
 - [ ] **Код(ы) IAE** — заявленные виды деятельности
@@ -120,7 +128,8 @@
       если клиентов-резидентов нет, это `0`
 
 Если вы подавали декларации за предыдущие кварталы, все эти цифры есть в
-*Consultar declaraciones presentadas* → *justificante* каждой декларации.
+*Modelo NNN → Todas las gestiones → Consulta de declaraciones presentadas* →
+*justificante* каждой декларации.
 
 ---
 

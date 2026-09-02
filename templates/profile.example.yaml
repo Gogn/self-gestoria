@@ -13,6 +13,25 @@
 # devengado пуст» может означать и ошибку в прошлых декларациях.
 
 profile:
+  # --- Статус пребывания. Спрашивается первым (вопрос 0 decision tree).
+  # Влияет на две независимые вещи:
+  #   1) применяется ли особый режим art. 93 LIRPF вместо обычного IRPF;
+  #   2) входит ли certificado estar al corriente в пакет на продление.
+  # 🔒 Номер разрешения, NIE и даты въезда сюда НЕ вписываются — нужен только тип.
+  residence:
+    # eu_citizen | permanent | temporary_permit | non_resident | pending | unknown
+    status: temporary_permit
+    # на чём основано разрешение, если temporary_permit.
+    # Свободный текст: ley_14_2013_dnv | cuenta_propia | reagrupacion | estudios | ...
+    permit_basis: ley_14_2013_dnv
+    # до какой даты нужно продлить. Идёт в тот же календарь, что налоговые сроки
+    renewal_date: 2027-04-30
+    # применяется ли особый режим art. 93 LIRPF («ley Beckham»).
+    # ⚠️ Сам не включается — под него подаётся заявление.
+    # Не помните = unknown, а не false. При true этот репозиторий профиль не покрывает
+    special_tax_regime_93: false
+  residence_source: asked            # из деклараций НЕ выводится, только вопрос
+
   # estimacion_directa_simplificada | estimacion_directa_normal | modulos
   regime: estimacion_directa_simplificada
   regime_source: declared            # ← из Mis datos censales
@@ -50,8 +69,10 @@ profile:
   foreign_assets_over_50k: null
   foreign_assets_over_50k_source: unknown  # ⚠️ неподача 720 ≠ отсутствие активов
 
-  sede_access: clave                 # clave | certificate | dnie | none
+  sede_access: works                 # works | none — есть ли рабочий доступ
   sede_access_source: asked
+  sede_access_method: clave          # clave | certificate | dnie
+  sede_access_method_source: asked
 
   gestor_apoderamiento_active: false
   gestor_apoderamiento_active_source: unknown  # проверять в разделе Apoderamientos

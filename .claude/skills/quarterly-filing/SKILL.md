@@ -14,6 +14,15 @@ description: Рассчитать значения casillas для кварта�
 Если в профиле есть поля `source: unknown`, влияющие на расчёт (тип клиента, режим) —
 скажи об этом до выдачи цифр, а не после.
 
+🔴 **Гейт по режиму — до любой арифметики.** Проверь `profile.residence`:
+
+- `special_tax_regime_93: true` → особый режим art. 93 LIRPF. Обычная схема
+  **неприменима**, этот репозиторий профиль не покрывает. Не считай, скажи прямо,
+  направь к gestor.
+- `status: non_resident` → другой налог (IRNR), другие модели. То же.
+- `residence_source: unknown` → спроси (вопрос 0 в `knowledge/00-profile-decision-tree.md`)
+  прежде чем считать. Так же, как с режимом IRPF и типом клиента.
+
 ## Шаг 1. Прочитай профиль и определи логику НДС
 
 Из `my-data/profile.yaml` → `clients`. Сопоставь с `knowledge/00-profile-decision-tree.md`,
@@ -45,8 +54,12 @@ vat_credit = 0.00   # накопленный кредит из прошлых п
 
 neto = round(income_ytd - exp_ytd, 2)
 c04  = round(neto * 0.20, 2) if neto > 0 else 0.00
-c19  = round(c04 - paid_prev - reten, 2)
-print(f'130: 01={income_ytd:.2f} 02={exp_ytd:.2f} 03={neto:.2f} 04={c04:.2f} 05={paid_prev:.2f} 06={reten:.2f} 19={c19:.2f}')
+c07  = round(c04 - paid_prev - reten, 2)
+# ⚠️ 19 == 07 только когда casillas 14 / 17 / 18 пусты: нет minoración por art. 110.3.c,
+#    нет переноса отрицательных результатов прошлых кварталов, нет вычета по ипотеке.
+#    Иначе цепочка длиннее — разметка в knowledge/modelo-130-irpf.md
+c19  = c07
+print(f'130: 01={income_ytd:.2f} 02={exp_ytd:.2f} 03={neto:.2f} 04={c04:.2f} 05={paid_prev:.2f} 06={reten:.2f} 07={c07:.2f} 19={c19:.2f}')
 
 res  = round(-vat_cuota, 2)
 tot  = round(res - vat_credit, 2)
