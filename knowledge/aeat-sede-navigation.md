@@ -1,56 +1,160 @@
 # Sede Electrónica AEAT — навигация
 
-> Актуально на: 2026-09 · https://sede.agenciatributaria.gob.es
+> Актуально на: 2026-09 · пути и ссылки сверены на живой Sede 2026-09-02
 > Перепроверять: AEAT периодически меняет структуру меню и названия разделов.
 
 ## Способы входа
 
 | Способ | Комментарий |
 |---|---|
-**Cl@ve** (PIN / Permanente) | Проще всего получить, привязывается к телефону |
-**Certificado digital** (FNMT) | Файл-сертификат в браузере. Надёжно, но нужен для установки |
+**Cl@ve Móvil** | Проще всего получить, привязывается к телефону. Именно эта форма указана как допустимая для разделов *Mi área personal* |
+**Certificado digital** (FNMT) | Файл-сертификат в браузере. Надёжно, но нужна установка |
 **DNIe** | Для граждан Испании с электронным удостоверением, нужен считыватель |
+**Número de referencia** | Ограниченный доступ, в основном по кампании Renta. Для квартальных подач не полагаться |
 
 ⚠️ Сертификат `.p12` — это ключ ко всем вашим налоговым данным. Храните в менеджере
 паролей, не в папке проекта. В этом репозитории `*.p12` внесён в `.gitignore`.
 
-## Основные разделы
+## Три домена — и почему это путает
+
+AEAT живёт на нескольких доменах, и в меню они перемешаны. Это не разные организации:
+
+| Домен | Что там | Нужен ли вход |
+|---|---|---|
+`sede.agenciatributaria.gob.es` | **Sede Electrónica.** Описания процедур, каталог моделей, ссылки на сервисы. Все страницы имеют путь `/Sede/…` | нет |
+`www1.agenciatributaria.gob.es` | **Сами приложения.** Пути вида `/wlpl/…`. Здесь вы реально смотрите декларации и подаёте | да |
+`www2.agenciatributaria.gob.es` | Открытые симуляторы и статика | нет |
+`www.agenciatributaria.es` | Информационный портал: справочные материалы, региональные налоги | нет |
+
+👉 «Sede» — это **не отдельный сайт**, а раздел того же agenciatributaria.gob.es. Слово
+`Sede` в пути `/Sede/…` — просто префикс страниц электронной приёмной.
+
+Практический вывод: вы **начинаете** на `sede.…` (там навигация), а **работаете** на
+`www1.…` (там данные). Прыжок между доменами при клике — норма, не сбой.
+
+Между ними стоит промежуточный экран **`SelectorAccesos.html`** — он спрашивает, чем
+вы будете идентифицироваться, и уже потом пускает в приложение.
+
+## Два входа: «по разделу» и «по модели»
+
+Это ключ ко всей навигации Sede. Сервисы разложены **двумя разными способами**, и
+нужное лежит то в одном, то в другом.
+
+### Вход 1. Mi área personal — «что у меня происходит»
+
+`sede.agenciatributaria.gob.es/Sede/mi-area-personal.html`
+
+Ровно пять пунктов, и больше там нет ничего:
+
+| Пункт | Зачем |
+|---|---|
+**Mis datos censales** | 👉 Режим, коды IAE, дата alta, перечень обязательных моделей. Здесь проверяется профиль |
+**Mis notificaciones** | 👉 Уведомления и требования. Считаются полученными без вашего прочтения |
+**Mis expedientes** | Ход процедур: рассрочки, апремио, проверки |
+**Mis apoderamientos otorgados** | Доверенности. Здесь отзывается доступ прежнего гестора |
+**Mis documentos pendientes de firma** | Документы, ждущие вашей подписи |
+
+🔴 **Поданных деклараций здесь нет.** Ни 130, ни 303, ни 100. Это самая частая ошибка
+навигации: логично искать «мои декларации» в «моём личном разделе», но их там не бывает.
+Декларации разложены по моделям — см. вход 2.
+
+Доступ к каждому пункту: **Cl@ve Móvil, сертификат или DNIe**.
+
+### Вход 2. Каталог моделей — «что я делаю с моделью N»
+
+Путь с главной, четыре клика:
+
+```
+Главная (sede.agenciatributaria.gob.es)
+└── Presentación de declaraciones, calendario del contribuyente     ← блок «Destacados»
+    └── Todas las declaraciones por modelo
+        └── Presentar y consultar declaraciones                      ← каталог: 01, 04, 030, 036, 100, 130, 303…
+            └── Modelo 303
+                └── Todas las gestiones                              ← вот здесь всё по этой модели
+```
+
+⚠️ В блоке «Destacados» на главной пункт называется **«Presentación de declaraciones,
+calendario del contribuyente»** — а не «Presentar y consultar declaraciones». Последнее
+появляется только двумя уровнями ниже, как название каталога.
+
+Короткий путь — сразу на страницу модели по её процедурному коду:
+
+| Модель | Страница | Все gestiones |
+|---|---|---|
+100 (Renta) | `/Sede/procedimientoini/G229.shtml` | `/Sede/tramitacion/G229.shtml` |
+130 (аванс IRPF) | `/Sede/procedimientoini/G601.shtml` | `/Sede/tramitacion/G601.shtml` |
+303 (НДС) | `/Sede/procedimientoini/G414.shtml` | `/Sede/tramitacion/G414.shtml` |
+
+💡 Эти же `G`-коды видны в дереве *Mis expedientes* (`…-01001-G229`). Удобно для сверки,
+к какой модели относится expediente.
+
+### Вход 3. Разделы вне моделей
+
+Часть сервисов не привязана ни к личному разделу, ни к модели — они по задаче:
 
 | Раздел | Зачем |
 |---|---|
-**Presentar y consultar declaraciones** | Подача 130, 303, 100 и др. |
-**Consultar declaraciones presentadas** | Все ранее поданные декларации с PDF и *justificante* |
-**PRE303** | 👉 Официальный помощник заполнения модели 303. Подсказывает актуальные графы под ваш профиль. Использовать для сверки перед подачей |
-**Mis datos censales** | Ваш режим налогообложения, заявленные виды деятельности (IAE), обязательные модели. Здесь проверяется профиль |
-**Pagar, aplazar y consultar deudas** | Статус долгов, оплата |
+**Pagar, aplazar y consultar deudas** | Статус долгов, оплата. На главной — блок «Destacados» → *Pagar, aplazar y consultar* |
 **Aplazamientos y fraccionamientos** → *Contestar requerimientos y otras gestiones* | 👉 Управление рассрочкой. **Платежи по рассрочке — только отсюда**, не через общую кнопку оплаты (см. `pitfalls.md` §3) |
-**Consultar notificaciones y comunicaciones no leídas** | 👉 Уведомления и требования. Проверять регулярно — бумажных писем не будет. В меню может называться и *Mis notificaciones* |
-**Consultar sus domiciliaciones** | 👉 Какие налоговые списания реально привязаны к счёту. Проверять, если домициляция когда-либо не сработала (`pitfalls.md`) |
-**Apoderamientos** | Доверенности. Здесь отзывается доступ прежнего гестора |
-**Mis expedientes** | Ход дел: рассрочки, apremio, проверки, requerimientos. ⚠️ Поданных 130/303 здесь **нет** — см. раздел ниже |
-**Área personal** | Сводная точка входа (`Sede/mi-area-personal.html`). Отсюда ведут ссылки на разделы ниже |
-**Mis últimos accesos** | Кто и когда заходил под вашим NIF. Полезно после отзыва apoderamiento |
-**Calendario del contribuyente** | 🔴 Официальные сроки — первоисточник. Есть формат **iCalendar** для подписки. Прямая ссылка: `Sede/en_gb/calendario-contribuyente.html` |
+**Calendario del contribuyente** | 🔴 Официальные сроки — первоисточник. Есть формат **iCalendar** для подписки |
+**Registro electrónico** | Ответ на requerimiento, подача документов и alegaciones |
+**Certificados tributarios** | Справки о налоговом положении. Здесь же *Situación censal* |
+**Suscripción a avisos informativos** | 👉 Оповещения на email/телефон. Включить сразу |
+**Asientos registrales** | Ваши записи в электронном реестре AEAT |
+
+## Что лежит в «Todas las gestiones» модели
+
+Одинаковая структура блоков у 130 и 303:
+
+| Блок | Что внутри |
+|---|---|
+**Presentación** | Подача + помощник (**Pre303** / **Pre 130**), предекларация-формуляр, подача по лотам |
+**Simuladores** (только 303) | 👉 **Simulador 303 (OPEN)** — без входа. Свободно гонять цифры |
+**Domiciliación** | Консультация, отзыв, реабилитация, исправление счёта списания |
+**Consultar** | 👉 **«Modelo NNN. Consulta de declaraciones presentadas»** — вот где justificantes |
+**Aportar documentación** | Ответ на requerimiento, досылка документов |
+**Ejercicios anteriores** | Прошлые годы отдельной ссылкой |
+
+### Отдельно отмечено — специфика 303
+
+- 🔴 **Consulta de la cartera de cuotas de IVA a compensar** →
+  `/wlpl/DAI3-RUTI/CarteraCuotas`
+  Официальный «портфель» накопленного НДС-кредита. Это **первоисточник** по величине для
+  casilla 110 — надёжнее, чем восстанавливать её вычитанием из прошлых деклараций.
+- **Instrucciones 2026** — официальные инструкции к форме за конкретный год. 👉 Именно
+  здесь сверяется нумерация casillas, а не по памяти. Лежат и за прошлые годы (2025, 2024)
+  — удобно, когда нужно понять, что означала графа в старой декларации.
+- **Autoliquidación rectificativa** — с 2026 механика исправления собственной 303.
+
+### Отдельно отмечено — специфика 130
+
+- **«Ejercicio 2020 y siguientes. Presentación, utilizando datos de declaraciones
+  anteriores»** — подача с подтягиванием данных прошлых деклараций года. Помогает не
+  потерять накопительные графы (доход/расходы YTD, casilla 05). ⚠️ Подтянутое всё равно
+  проверять: это удобство, а не гарантия.
 
 ## Прямые ссылки
 
-> Проверено по живой странице Sede: 2026-09-02. `[NIF]` подставляется свой.
-> Работают только внутри авторизованной сессии; AEAT может их менять.
+> Проверено на живой Sede: 2026-09-02. `[NIF]` подставляется свой.
+> Ссылки на `/wlpl/…` работают только внутри авторизованной сессии.
 
-| Раздел | URL |
+| Сервис | URL |
 |---|---|
-Consultar declaraciones presentadas | `www1.agenciatributaria.gob.es/wlpl/SCEJ-MANT/CONSUL/index.zul?MODELO=&EJERCICIO=0&NIFOBLIGADO=[NIF]` |
+Все поданные декларации, любые модели | `www1.agenciatributaria.gob.es/wlpl/SCEJ-MANT/CONSUL/index.zul?MODELO=&EJERCICIO=0&NIFOBLIGADO=[NIF]` |
+То же по одной модели | тот же URL с `MODELO=303` |
 Mis datos censales | `www1.agenciatributaria.gob.es/wlpl/BUGC-JDIT/MdcAcceso?nifRepresentado=[NIF]&E_HNR=&EJERCICIO=0` |
+Cartera de cuotas de IVA a compensar | `www1.agenciatributaria.gob.es/wlpl/DAI3-RUTI/CarteraCuotas` |
 Consultar sus domiciliaciones | `www1.agenciatributaria.gob.es/wlpl/ECDM-MANT/DomQueryN` |
-Notificaciones y comunicaciones no leídas | `www1.agenciatributaria.gob.es/wlpl/GNNO-JDIT/ResumenInteresados` |
+Notificaciones no leídas | `www1.agenciatributaria.gob.es/wlpl/GNNO-JDIT/ResumenInteresados` |
 Mis expedientes | `www1.agenciatributaria.gob.es/wlpl/TEWV-CORE/ResumenVlt` |
 Mis últimos accesos | `www1.agenciatributaria.gob.es/wlpl/ADHT-AUTH/UltimasConexionesW` |
+Mi área personal | `sede.agenciatributaria.gob.es/Sede/mi-area-personal.html` |
+Simulador 303 2026 (без входа) | `www2.agenciatributaria.gob.es/wlpl/A303-FWME/E2026/OPEN/index.zul` |
 Asientos registrales | `www1.agenciatributaria.gob.es/wlpl/REGD-JDIT/SvRegMisAsiIntQue` |
-Área personal | `sede.agenciatributaria.gob.es/Sede/mi-area-personal.html` |
 Calendario del contribuyente | `sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html` |
-Calendario — iCalendar | `sede.agenciatributaria.gob.es/Sede/en_gb/ayuda/calendario-contribuyente/icalendar.html` |
+Calendario — iCalendar (подписка) | `sede.agenciatributaria.gob.es/Sede/en_gb/ayuda/calendario-contribuyente/icalendar.html` |
 
-Обратите внимание: ссылки на разделы с данными несут NIF в query-строке. Не пересылайте
+⚠️ Ссылки с `NIFOBLIGADO=` и `nifRepresentado=` несут NIF в query-строке. Не пересылайте
 их и не сохраняйте в публичные файлы — подставляйте `[NIF]` сами.
 
 ## Mis expedientes — что там есть и чего там нет
@@ -73,8 +177,7 @@ Agencia Estatal de Administración Tributaria
 ```
 
 🔴 **Главная ловушка раздела.** *Mis expedientes* показывает **процедуры**, а не
-декларации. Квартальных 130 и 303 здесь не будет никогда — они лежат в
-*Consultar declaraciones presentadas*. Пустая ветка IRPF в expedientes **не значит**,
+декларации. Квартальных 130 и 303 здесь не будет никогда. Пустая ветка IRPF **не значит**,
 что декларации не подавались; она значит, что по ним не открыто процедур.
 
 Обратное тоже верно и полезно: **expediente в закладке *En tramitación* — это
@@ -84,20 +187,27 @@ Agencia Estatal de Administración Tributaria
 
 💡 Ветка *Certificados → Censales* стоит проверять первой: если сертификат
 *Situación censal* уже выдавался, PDF с режимом и кодами IAE можно скачать оттуда, не
-запрашивая заново.
+запрашивая заново. ⚠️ Сверить дату: сертификат отражает положение на момент выдачи.
 
 ## Первые шаги при переходе на самоподачу
 
-- [ ] Получить и проверить собственный доступ (Cl@ve или сертификат)
-- [ ] *Mis datos censales* → выписать режим, коды IAE, список обязательных моделей
-- [ ] *Consultar declaraciones presentadas* → скачать последние декларации, поданные
-      гестором, как образец заполнения
-- [ ] *Pagar y consultar deudas* → убедиться, что нет незамеченных долгов
-- [ ] *Mis expedientes* → закладка *En tramitación*: нет ли незакрытых процедур
-- [ ] *Consultar sus domiciliaciones* → сверить, какие списания привязаны к счёту
-- [ ] *Notificaciones y comunicaciones no leídas* → включить оповещения на email
-- [ ] *Apoderamientos* → посмотреть, кто имеет к вам доступ
-- [ ] Первую самостоятельную подачу прогнать через PRE303 и/или сверить с gestor
+- [ ] Получить и проверить собственный доступ (Cl@ve Móvil, сертификат или DNIe)
+- [ ] *Mi área personal → Mis datos censales* → выписать режим, коды IAE, список
+      обязательных моделей
+- [ ] *Modelo 130 / 303 → Todas las gestiones → Consulta de declaraciones presentadas* →
+      скачать декларации, поданные гестором, как образец заполнения
+- [ ] *Pagar, aplazar y consultar deudas* → убедиться, что нет незамеченных долгов
+- [ ] *Mi área personal → Mis expedientes* → закладка *En tramitación*: нет ли
+      незакрытых процедур
+- [ ] *Modelo 303 → Todas las gestiones → Cartera de cuotas de IVA a compensar* →
+      зафиксировать накопленный НДС-кредит
+- [ ] *Domiciliaciones* → сверить, какие списания привязаны к счёту
+- [ ] *Mi área personal → Mis notificaciones* + *Suscripción a avisos informativos* →
+      включить оповещения
+- [ ] *Mi área personal → Mis apoderamientos otorgados* → кто имеет к вам доступ
+- [ ] Скачать *Instrucciones* к 130 и 303 за текущий год — сверить нумерацию casillas
+- [ ] Первую самостоятельную подачу прогнать через **Pre303** / **Pre 130**, а цифры
+      предварительно — через **Simulador 303 (OPEN)**
 
 ## Полезно знать
 
