@@ -18,7 +18,10 @@
 Скачайте justificantes из Sede Electrónica — они лежат по каждой модели отдельно
 (`Modelo NNN → Todas las gestiones → Consulta de declaraciones presentadas`, пути в
 `knowledge/aeat-sede-navigation.md`)
-плюс PDF раздела *Mis datos censales*, положите в `my-data/history/` и скажите агенту:
+плюс разделы *Mis datos censales* — 🔴 их **три**, а не один: сохранённый лист содержит
+только NIF и адрес, а режим, коды IAE и перечень обязательных моделей лежат за ссылками
+*Mis Actividades Económicas* и *Mis Obligaciones*. Положите в `my-data/history/` и
+скажите агенту:
 **«загрузи мои прошлые декларации»** (скилл `/import-history`).
 
 Из них восстанавливаются: режим налогообложения, коды IAE, набор обязательных моделей,
@@ -34,7 +37,9 @@
 Тип клиента: юрлицо или физлицо | Для физлица вне ЕС правила локализации могут отличаться |
 Заявлена ли часть жилья в 036 | Без этого нельзя вычитать *suministros* |
 Зарубежные активы | Неподача модели 720 ≠ отсутствие активов |
-Коды IAE | Только в *datos censales*, не в декларациях |
+Коды IAE | Номер есть в модели 100, расшифровка — только в *datos censales* |
+Перечень обязательных моделей | Принципиально не выводится: подача ≠ обязанность |
+Дата *alta censal* | Только в *datos censales → Mis Actividades Económicas* |
 Действующие apoderamientos | Отдельный раздел Sede Electrónica |
 
 Подробнее: `../knowledge/import-previous-filings.md`
@@ -43,7 +48,8 @@
 
 ## Часть 1. Профиль — заполняется один раз
 
-Источник большинства ответов: *Sede Electrónica → Mis datos censales*.
+Источник большинства ответов: *Sede Electrónica → Mis datos censales*, причём разделы
+*Mis Actividades Económicas* и *Mis Obligaciones*, а не первый лист с адресом.
 Исключение — первые два пункта: их в налоговых данных нет, отвечает только пользователь.
 
 - [ ] 🔴 **Статус пребывания в Испании**: гражданство ЕС / постоянное (*larga duración*) /

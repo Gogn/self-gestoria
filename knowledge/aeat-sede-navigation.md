@@ -48,11 +48,43 @@ AEAT живёт на нескольких доменах, и в меню они 
 
 | Пункт | Зачем |
 |---|---|
-**Mis datos censales** | 👉 Режим, коды IAE, дата alta, перечень обязательных моделей. Здесь проверяется профиль |
+**Mis datos censales** | 👉 Режим, коды IAE, дата alta, перечень обязательных моделей. Здесь проверяется профиль. 🔴 **Не одна страница** — см. раздел ниже |
 **Mis notificaciones** | 👉 Уведомления и требования. Считаются полученными без вашего прочтения |
 **Mis expedientes** | Ход процедур: рассрочки, апремио, проверки |
 **Mis apoderamientos otorgados** | Доверенности. Здесь отзывается доступ прежнего гестора |
 **Mis documentos pendientes de firma** | Документы, ждущие вашей подписи |
+
+### 🔴 Mis datos censales — одна ссылка, но несколько разделов
+
+Открывается лист *Consulta de Datos Identificativos y Censales*. Кнопка сохранения в PDF
+отдаёт **только его**, а на нём — лишь идентификация и адрес:
+
+- *Datos Identificativos del Contribuyente* — NIF, ФИО, дата рождения, гражданство
+- *Domicilio Fiscal* — адрес, муниципалитет, провинция, referencia catastral
+- признак *Obligado a notificaciones electrónicas*
+
+**Ни режима, ни кодов IAE, ни даты alta, ни перечня обязательных моделей на этом листе
+нет.** PDF при этом выглядит законченным документом — ловушка именно в этом.
+
+Нужное лежит за отдельными ссылками на той же странице:
+
+| Ссылка | Открывается как | Что оттуда | |
+|---|---|---|---|
+**Mis Actividades Económicas** | *Censo de Actividades y Locales* | дата *alta censal* (**F. Inicio**), sección, эпиграф IAE, **Locales** | 🔴 |
+**Mis Obligaciones** | *Situación tributaria* | перечень обязанностей: периодичность, дата alta, статус | 🔴 |
+**Mi Situación Tributaria** | тот же документ | *Estado Sit. Trib.* | 🟡 |
+*Datos de contacto para recibir avisos de la AEAT* | — | телефон/почта для уведомлений | 🟡 |
+
+⚠️ Заголовок открывшейся страницы не совпадает с названием ссылки — сохранённый файл
+получит другое имя. Последние две ссылки могут отдать один и тот же документ.
+
+Рядом — не справки, а действия: *Cambio de Domicilio Fiscal*, *Alta de Domicilio de
+Notificaciones*, *Presentación Modelo Censal 036*.
+
+Сохранять каждый раздел отдельным файлом. Что чем закрывается и что делать, если
+разделы недоступны, — `import-previous-filings.md` §2.
+
+> Состав ссылок наблюдался на живой Sede 2026-09-02.
 
 🔴 **Поданных деклараций здесь нет.** Ни 130, ни 303, ни 100. Это самая частая ошибка
 навигации: логично искать «мои декларации» в «моём личном разделе», но их там не бывает.
@@ -216,7 +248,9 @@ Agencia Estatal de Administración Tributaria
 
 - [ ] Получить и проверить собственный доступ (Cl@ve Móvil, сертификат или DNIe)
 - [ ] *Mi área personal → Mis datos censales* → выписать режим, коды IAE, список
-      обязательных моделей
+      обязательных моделей.
+      ⚠️ Пройти по ссылкам **Mis Actividades Económicas** и **Mis Obligaciones**:
+      на первом листе этих данных нет, только идентификация и адрес
 - [ ] *Modelo 130 / 303 → Todas las gestiones → Consulta de declaraciones presentadas* →
       скачать декларации, поданные гестором, как образец заполнения
 - [ ] *Pagar, aplazar y consultar deudas* → убедиться, что нет незамеченных долгов

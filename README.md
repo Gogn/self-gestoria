@@ -32,7 +32,10 @@
   отдельно**: `Modelo 130 / 303 / 100` → *Todas las gestiones* → *Consulta de
   declaraciones presentadas*. Точные пути и прямые ссылки —
   [knowledge/aeat-sede-navigation.md](knowledge/aeat-sede-navigation.md);
-- *Mis datos censales* → PDF или скриншот;
+- *Mis datos censales* → 🔴 **не один PDF, а три**. Кнопка сохранения отдаёт только лист
+  с NIF и адресом; режим, коды IAE, дата alta и перечень обязательных моделей лежат за
+  отдельными ссылками *Mis Actividades Económicas* и *Mis Obligaciones* на той же
+  странице. Пройдите по каждой и сохраните своим файлом;
 - *Cartera de cuotas de IVA a compensar* → накопленный НДС-кредит. Один запрос за самый
   поздний период выводит все предыдущие; экспорта в PDF нет — сохраняется как HTML.
 
