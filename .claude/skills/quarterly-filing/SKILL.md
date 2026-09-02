@@ -91,8 +91,10 @@ print(f'303: 28={vat_base:.2f} 29={vat_cuota:.2f} 45={vat_cuota:.2f} 46={res:.2f
 
 - Срок и сколько дней осталось (`knowledge/deadlines.md`). Проверь правило переноса
   с выходных — не называй «20-е число» не глядя в календарь.
-- Если напоминания не настроены — предложи подписку на календарь
-  [radarfiscal.es](https://radarfiscal.es) или бот
+- 🔴 Срок сверяй по официальному календарю AEAT, а не по таблице в `knowledge/deadlines.md`
+  (она вторична и может отстать): https://sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html
+- Если напоминания не настроены — предложи подписку на **официальный iCalendar** AEAT,
+  дополнительно [radarfiscal.es](https://radarfiscal.es) или
   [@Autonomo_Help_Bot](https://t.me/Autonomo_Help_Bot) как страховку на следующий квартал.
 - 👉 **Рекомендуй прямую оплату 130 (NRC / картой)**, а не домициляцию, со ссылкой на
   `knowledge/pitfalls.md` §1 — объясни в одну фразу, чем это кончилось в реальном кейсе.

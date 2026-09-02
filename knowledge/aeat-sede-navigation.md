@@ -30,7 +30,7 @@
 **Mis expedientes** | Ход дел: рассрочки, apremio, проверки, requerimientos. ⚠️ Поданных 130/303 здесь **нет** — см. раздел ниже |
 **Área personal** | Сводная точка входа (`Sede/mi-area-personal.html`). Отсюда ведут ссылки на разделы ниже |
 **Mis últimos accesos** | Кто и когда заходил под вашим NIF. Полезно после отзыва apoderamiento |
-**Calendario del contribuyente** | Официальные сроки на текущий год |
+**Calendario del contribuyente** | 🔴 Официальные сроки — первоисточник. Есть формат **iCalendar** для подписки. Прямая ссылка: `Sede/en_gb/calendario-contribuyente.html` |
 
 ## Прямые ссылки
 
@@ -47,6 +47,8 @@ Mis expedientes | `www1.agenciatributaria.gob.es/wlpl/TEWV-CORE/ResumenVlt` |
 Mis últimos accesos | `www1.agenciatributaria.gob.es/wlpl/ADHT-AUTH/UltimasConexionesW` |
 Asientos registrales | `www1.agenciatributaria.gob.es/wlpl/REGD-JDIT/SvRegMisAsiIntQue` |
 Área personal | `sede.agenciatributaria.gob.es/Sede/mi-area-personal.html` |
+Calendario del contribuyente | `sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html` |
+Calendario — iCalendar | `sede.agenciatributaria.gob.es/Sede/en_gb/ayuda/calendario-contribuyente/icalendar.html` |
 
 Обратите внимание: ссылки на разделы с данными несут NIF в query-строке. Не пересылайте
 их и не сохраняйте в публичные файлы — подставляйте `[NIF]` сами.
@@ -101,9 +103,12 @@ Agencia Estatal de Administración Tributaria
 
 - У AEAT есть телефонная поддержка и запись на приём (*cita previa*). Для сложных
   случаев это работает и бесплатно.
-- *Calendario del contribuyente* — первоисточник по срокам. Внешние календари и боты
-  (см. `deadlines.md`) удобны как напоминание, но **не видят** адресованные лично вам
-  требования: для этого только *Mis notificaciones*.
+- *Calendario del contribuyente* — 🔴 первоисточник по срокам:
+  https://sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html
+  Доступен как HTML и как **iCalendar** — подписаться можно прямо из официального
+  источника. Внешние календари и боты (см. `deadlines.md`) удобны фильтрацией под
+  профиль и напоминаниями, но **не видят** адресованные лично вам требования: для этого
+  только *Mis notificaciones*.
 - *Justificante de presentación* — единственное доказательство подачи. Сохраняйте PDF
   каждой декларации (в `my-data/`, не в git).
 - Интерфейс Sede переключается на **английский** (ES / CA / GL / VA / EN в правом

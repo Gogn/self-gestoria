@@ -143,7 +143,7 @@
 Набор моделей определяет ваш налоговый календарь. Сроки для каждой модели, правило
 переноса с выходных и конкретные даты 2026–2027 — в [`deadlines.md`](deadlines.md).
 
-👉 Там же — как подписаться на календарь с автообновлением
-([radarfiscal.es](https://radarfiscal.es) фильтрует сроки под ваш профиль) и на
-напоминания в Telegram ([@Autonomo_Help_Bot](https://t.me/Autonomo_Help_Bot)), чтобы не
-держать даты в голове.
+👉 Сверять сроки — по [официальному календарю AEAT](https://sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html); у него есть формат
+iCalendar для подписки. Дополнительно: [radarfiscal.es](https://radarfiscal.es)
+отфильтрует сроки под ваш профиль, [@Autonomo_Help_Bot](https://t.me/Autonomo_Help_Bot)
+пришлёт напоминание в Telegram.

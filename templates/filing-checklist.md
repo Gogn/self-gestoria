@@ -63,9 +63,11 @@
 - [ ] Очередной платёж по рассрочке оплачен, если есть
       (только через *Aplazamientos → Contestar requerimientos y otras gestiones*)
 - [ ] Даты следующего квартала и следующего платежа рассрочки в календаре
-- [ ] Настроены автоматические напоминания о сроках — подписка на календарь
-      [radarfiscal.es](https://radarfiscal.es) и/или бот
-      [@Autonomo_Help_Bot](https://t.me/Autonomo_Help_Bot) (см. `knowledge/deadlines.md`)
+- [ ] Срок сверен по [официальному календарю AEAT](https://sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html)
+- [ ] Настроены автоматические напоминания — подписка на **официальный iCalendar** AEAT,
+      дополнительно [radarfiscal.es](https://radarfiscal.es) (фильтрует под профиль)
+      и/или [@Autonomo_Help_Bot](https://t.me/Autonomo_Help_Bot).
+      См. `../knowledge/deadlines.md`, раздел «Где сверять сроки»
 
 ---
 
