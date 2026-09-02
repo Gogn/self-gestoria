@@ -42,6 +42,10 @@
 Дата *alta censal* | Только в *datos censales → Mis Actividades Económicas* |
 Действующие apoderamientos | Отдельный раздел Sede Electrónica |
 
+Если декларации подавал гестор, у него же лежит вся первичка — в AEAT её нет.
+У **Xolo** выгрузка делается самостоятельно: `https://app.xolo.io/selfservice/export`.
+⚠️ Она содержит документы, но **не книги учёта** — реестр расходов просите отдельно.
+
 Подробнее: `../knowledge/import-previous-filings.md`
 
 ---

@@ -43,6 +43,12 @@
 
 - *Informe integral de bases de cotización* → один PDF за все годы сразу.
 
+И у прежнего гестора — первичку, которой в AEAT нет вообще: фактуры поставщиков,
+выставленные счета, модель 036. У **Xolo** это самообслуживание, без письма в
+поддержку: `https://app.xolo.io/selfservice/export`. ⚠️ Выгрузка даёт **документы, а не
+книги учёта** — реестр `libro registro de compras y gastos` запрашивается отдельно.
+Детали и ловушки — [knowledge/import-previous-filings.md](knowledge/import-previous-filings.md).
+
 Положите в `my-data/history/`: декларации — в подпапку по году, имена вида
 `modelo 130 - t1.pdf`; документы, не привязанные к году, — в корень. Затем скажите:
 **«загрузи мои прошлые декларации»**.
