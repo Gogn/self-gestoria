@@ -212,6 +212,60 @@ Calendario — iCalendar (подписка) | `sede.agenciatributaria.gob.es/Sed
 ⚠️ Ссылки с `NIFOBLIGADO=` и `nifRepresentado=` несут NIF в query-строке. Не пересылайте
 их и не сохраняйте в публичные файлы — подставляйте `[NIF]` сами.
 
+## Seguridad Social — отдельный сайт, не AEAT
+
+Взносы autónomo живут не в AEAT, а в TGSS, и это другой домен с другим входом.
+Путать легко: у Seguridad Social тоже есть «Sede Electrónica».
+
+> Проверено на живом сайте: 2026-09-03.
+
+| Домен | Что там |
+|---|---|
+`portal.seg-social.gob.es` | **Importass** — личный кабинет TGSS. Здесь взносы, долги, справки. Практически всё нужное autónomo |
+`sede.seg-social.gob.es` | Sede Electrónica Seguridad Social — каталог процедур, пенсии, пособия |
+
+🔴 **`portal.seguridad-social.gob.es` не существует.** Домен — `seg-social`, без `uridad`.
+
+⚠️ Ссылки Importass вида `/wps/portal/…/!ut/p/z1/…` содержат состояние навигации
+WebSphere и на другой сессии не открываются. Сохранять только «чистые» пути без
+блока `!ut/p/…` — они ниже.
+
+⚠️ Сайт может открыться **по-английски**, и тогда названия разделов другие:
+`Cotización` → **Contribution**, `Recaudación` → **Collection**,
+`Informes y certificados` → **Reports and Certificates**. Язык переключается в
+подвале страницы.
+
+### Прямые ссылки Importass
+
+| Сервис | URL | Зачем |
+|---|---|---|
+Личный кабинет | `portal.seg-social.gob.es` | точка входа |
+**Informe de cuotas ingresadas** | `portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+cuotas+ingresadas` | 🔴 **фактически уплаченные взносы**, все периоды одним отчётом |
+Informe de bases de cotización | `…/Vida+laboral+e+informes/Informes+de+tus+cotizaciones/Informe+de+bases+de+cotizacion` | ⚠️ **базы, а не уплаченные суммы.** Для расходов не годится |
+Consulta de recibos de trabajo autónomo | `portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Consulta+de+pagos+y+deudas/ConsultaRecibos` | отдельные квитанции. Данные с 01/06/2018 |
+Regularización anual de cuotas de Trabajo Autónomo | `portal.seg-social.gob.es/wps/portal/importass/importass/Categorias/Consulta+de+pagos+y+deudas/PagosDevoluciones_/RegularizacionRETA` | результат годовой сверки взносов по фактическому доходу |
+Certificado de estar al corriente (TGSS) | раздел *Consulta de pagos y deudas* | ⚠️ это справка **TGSS**, отдельная от справки AEAT |
+
+👉 **Для расходов в модели 130 берите `Informe de cuotas ingresadas`, а не
+`Informe de bases de cotización`.** База умножается на ставку, но результат не равен
+уплаченному: при *tarifa plana* взнос фиксированный и с базой не связан вовсе.
+
+### 🔴 Regularización anual de cuotas (RETA) — с 2023 года
+
+Взнос autónomo с 2023 года **предварительный**: он рассчитывается по заявленному
+tramo, а затем TGSS сверяет его с фактическим рендимьенто нето из декларации и
+доначисляет или возвращает разницу.
+
+Практические следствия:
+
+- уплаченный за год взнос может измениться **после** подачи Renta;
+- доначисление приходит как новый долг — со своим сроком и своими последствиями;
+- расход по взносам за прошлый год может оказаться больше заявленного в 130.
+
+👉 Проверять по ссылке *Regularización anual* за каждый закрытый год. Отсутствие
+уведомления не означает, что сверки не было — см. правило про «нет записи ≠ нет
+факта» в `CLAUDE.md`.
+
 ## Mis expedientes — что там есть и чего там нет
 
 Дерево по департаментам, в каждом узле в скобках число expedientes. Четыре закладки:
