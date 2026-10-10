@@ -61,16 +61,37 @@ c07  = round(c04 - paid_prev - reten, 2)
 c19  = c07
 print(f'130: 01={income_ytd:.2f} 02={exp_ytd:.2f} 03={neto:.2f} 04={c04:.2f} 05={paid_prev:.2f} 06={reten:.2f} 07={c07:.2f} 19={c19:.2f}')
 
-res  = round(-vat_cuota, 2)
-tot  = round(res - vat_credit, 2)
-print(f'303: 28={vat_base:.2f} 29={vat_cuota:.2f} 45={vat_cuota:.2f} 46={res:.2f} 110={vat_credit:.2f} oborot={income_q:.2f} итог={tot:.2f}')
+c45  = round(vat_cuota, 2)
+c46  = round(-c45, 2)
+# 66 == 46 при 65 = 100 % и пустых 58 / 76 (см. «Блок итога» в knowledge/modelo-303-iva.md)
+c66  = c46
+print(f'303: 28={vat_base:.2f} 29={vat_cuota:.2f} 45={c45:.2f} 46={c46:.2f} 66={c66:.2f} 110={vat_credit:.2f} oborot={income_q:.2f}')
+
+# Итог — НЕ 46 − 110. Кредит идёт через 78 (зачтено) и 87 (остаток дальше).
+if vat_credit > 0 and c66 > 0:
+    print('СТОП: 66 > 0 при накопленном кредите. Сколько кредита зачесть в 78, в knowledge/ не размечено —')
+    print('      сверить в Instrucciones 303 / PRE303, не считать самому. 87 = 110 − 78.')
+else:
+    c78 = 0.00                      # зачитывать нечего: результат ≤ 0 или кредита нет
+    c87 = round(vat_credit - c78, 2)
+    c71 = round(c66 - c78, 2)       # 71 == 66 при 78 = 0 — разбор в examples/perfil-a-cliente-no-ue.md
+    if c45 == 0 and income_q == 0:
+        kind = 'sin actividad'
+    else:
+        kind = 'a ingresar' if c71 > 0 else 'resultado cero' if c71 == 0 else 'a compensar (или solicitud de devolución)'
+    print(f'303: 78={c78:.2f} 87={c87:.2f} 71={c71:.2f} → {kind}')
 "
 ```
 
 Формулы и смысл casillas — `knowledge/modelo-130-irpf.md` и `knowledge/modelo-303-iva.md`.
 
 ⚠️ Формула для 303 в примере выше верна **только** при пустом IVA devengado.
-Если клиентам НДС начисляется, считай `devengado − deducible`.
+Если клиентам НДС начисляется, считай `46 = devengado − deducible`.
+
+🔴 **Итог 303 — не `46 − 110`.** Накопленный кредит не вычитается из результата
+напрямую: в 110 он стоит целиком, в 78 — сколько зачтено в этом периоде, в 87 —
+остаток на следующий. При отрицательном результате `78 = 0`, `87 = 110`, а итог 71
+равен результату квартала. Пустая 87 при существующем кредите — кредит потерян.
 
 ## Шаг 3. Обязательные проверки
 
