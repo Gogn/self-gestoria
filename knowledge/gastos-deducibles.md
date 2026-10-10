@@ -78,7 +78,8 @@
 
 ## Льгота: 5 % gastos de difícil justificación
 
-`[норма]` RIRPF art. 30.2ª; LIRPF art. 30.2.4ª — ссылки в `sources-primarias.md`.
+`[норма]` RIRPF art. 30.2ª; LIRPF art. 30.2.4ª — дословно в `sources/boe/rirpf.md` и
+`sources/boe/lirpf.md`; casilla 02 — `sources/aeat/instrucciones-130.md`.
 
 В режиме `estimación directa simplificada` к расходам добавляется **5 %** rendimiento
 neto, посчитанного **до** вычета самих 5 %. Предел — **2 000 € в год**, общий для

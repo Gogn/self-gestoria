@@ -1,0 +1,75 @@
+{
+  "_comment": "Что скачивает sources/fetch.py. Добавить источник = добавить запись и запустить скрипт. Вручную файлы в sources/ не правятся.",
+  "files": [
+    {
+      "file": "boe/lirpf.md",
+      "title": "Ley 35/2006, del Impuesto sobre la Renta de las Personas Físicas (LIRPF)",
+      "type": "boe",
+      "norm": "BOE-A-2006-20764",
+      "blocks": [
+        "a14",
+        "a28",
+        "a30",
+        "a32",
+        "da-12"
+      ]
+    },
+    {
+      "file": "boe/rirpf.md",
+      "title": "Real Decreto 439/2007, Reglamento del IRPF (RIRPF)",
+      "type": "boe",
+      "norm": "BOE-A-2007-6820",
+      "blocks": [
+        "a7",
+        "a26",
+        "a30"
+      ]
+    },
+    {
+      "file": "boe/lis.md",
+      "title": "Ley 27/2014, del Impuesto sobre Sociedades (LIS)",
+      "type": "boe",
+      "norm": "BOE-A-2014-12328",
+      "blocks": [
+        "a11"
+      ]
+    },
+    {
+      "file": "boe/liva.md",
+      "title": "Ley 37/1992, del Impuesto sobre el Valor Añadido (LIVA)",
+      "type": "boe",
+      "norm": "BOE-A-1992-28740",
+      "blocks": [
+        "a75",
+        "a79"
+      ]
+    },
+    {
+      "file": "boe/rd-1619-2012-facturacion.md",
+      "title": "Real Decreto 1619/2012, Reglamento de facturación",
+      "type": "boe",
+      "norm": "BOE-A-2012-14696",
+      "blocks": [
+        "a5",
+        "a12"
+      ]
+    },
+    {
+      "file": "boe/pgc-nrv-11.md",
+      "title": "Real Decreto 1514/2007, Plan General de Contabilidad — NRV 11.ª Moneda extranjera",
+      "type": "boe",
+      "norm": "BOE-A-2007-19884",
+      "blocks": [
+        "A11"
+      ]
+    },
+    {
+      "file": "aeat/instrucciones-130.md",
+      "title": "AEAT — Instrucciones del modelo 130 (casillas, ingreso, plazos)",
+      "type": "html",
+      "url": "https://sede.agenciatributaria.gob.es/Sede/impuestos-tasas/impuesto-sobre-renta-personas-fisicas/modelo-130-irpf______esionales-estimacion-directa-fraccionado_/instrucciones.html",
+      "start": "Casilla 01.",
+      "end": "Accesibilidad"
+    }
+  ]
+}

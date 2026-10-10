@@ -20,7 +20,8 @@ Autónomos на `estimación directa`. Не подаётся, если ≥ 70 % 
 ## Casillas
 
 Источник — `[официальное разъяснение]`: *Instrucciones* модели 130 на Sede (ссылка — в
-`aeat-sede-navigation.md`, «Прямые ссылки») и подписи граф в самой форме 2026.
+`aeat-sede-navigation.md`, «Прямые ссылки»; дословно — `sources/aeat/instrucciones-130.md`)
+и подписи граф в самой форме 2026.
 
 ### Раздел I — actividades en estimación directa
 

@@ -12,6 +12,8 @@
 
 import argparse
 import datetime as dt
+import hashlib
+import json
 import re
 import subprocess
 import sys
@@ -290,6 +292,62 @@ def check_private_amounts(files, min_amount, r):
                           f"{rel(p)}:{n} {m.group(1)} (есть в {rel(src)})")
 
 
+def check_sources(files, r, incoming):
+    """sources/: шапка, контрольный хеш (ловит ручные правки), манифест, входящие ссылки."""
+    base = ROOT / "sources"
+    if not base.is_dir():
+        return
+    manifest = {e["file"] for e in json.loads((base / "manifest.json").read_text(encoding="utf-8"))["files"]}
+    present = set()
+    for p in files:
+        if base not in p.parents or p.suffix != ".md" or p.name == "README.md":
+            continue
+        name = str(p.relative_to(base))
+        present.add(name)
+        lines = p.read_text(encoding="utf-8").split("\n")
+        head = [l for l in lines[:20] if l.startswith(">")]
+        if not any(l.startswith("> Источник:") for l in head) or not any(l.startswith("> Снято:") for l in head):
+            r.add("E", "sources/: нет «Источник:» или «Снято:» в шапке", rel(p))
+        m = next((re.search(r"sha256 текста `([0-9a-f]+)`", l) for l in head if "sha256" in l), None)
+        k = next(i for i, l in enumerate(lines) if l.startswith(">"))
+        while k < len(lines) and lines[k].startswith(">"):
+            k += 1
+        body = "\n".join(lines[k + 1:])
+        if not m:
+            r.add("E", "sources/: нет контрольного хеша в шапке", rel(p))
+        elif hashlib.sha256(body.strip().encode("utf-8")).hexdigest()[:16] != m.group(1):
+            r.add("E", "sources/: текст не совпадает с хешем — файл правили вручную", rel(p))
+        if not any(s for s in incoming[p.resolve()] if base not in s.parents):
+            r.add("W", "sources/: на выдержку не ссылается ни один файл вне sources/", rel(p))
+    for name in sorted(manifest - present):
+        r.add("E", "sources/: есть в manifest.json, но файла нет (запустить fetch.py)", name)
+    for name in sorted(present - manifest):
+        r.add("E", "sources/: файла нет в manifest.json", name)
+
+
+LOG_HEAD = re.compile(r"^## \[(\d{4}-\d{2}-\d{2})\] (ingest|verify|lint|query) \| \S")
+
+
+def check_logs(r):
+    """log.md и my-data/log.md: строгий заголовок записи и хронологический порядок."""
+    for p in (ROOT / "log.md", ROOT / "my-data" / "log.md"):
+        if not p.exists():
+            if p.parent == ROOT:
+                r.add("W", "Нет журнала log.md в корне", "—")
+            continue
+        last = ""
+        for n, line in unfenced(p.read_text(encoding="utf-8")):
+            if not line.startswith("## "):
+                continue
+            m = LOG_HEAD.match(line)
+            if not m:
+                r.add("W", "Журнал: заголовок не по формату «## [ГГГГ-ММ-ДД] операция | что»", f"{rel(p)}:{n}")
+            elif m.group(1) < last:
+                r.add("W", "Журнал: запись раньше предыдущей (дописывать только в конец)", f"{rel(p)}:{n}")
+            else:
+                last = m.group(1)
+
+
 def check_index(knowledge, r, incoming):
     claude = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
     for p in knowledge:
@@ -371,6 +429,8 @@ def main():
         if p.suffix in {".md", ".yaml", ".yml", ".py", ".json"}:
             check_privacy(p, p.read_text(encoding="utf-8"), r)
     check_private_amounts(files, a.min_amount, r)
+    check_sources(files, r, incoming)
+    check_logs(r)
     check_index(knowledge, r, incoming)
 
     print(f"LINT базы знаний · {a.today.isoformat()} · файлов: {len(files)}, из них knowledge/: {len(knowledge)}")
