@@ -168,6 +168,7 @@ my-data/         ваши реальные данные — в .gitignore, на�
                    /collect-data        собрать данные за квартал
                    /quarterly-filing    рассчитать casillas
                    /consistency-check   сверка перед подачей
+                   /lint-knowledge      проверка самой базы знаний: ссылки, даты, противоречия
 ```
 
 ## Приватность
