@@ -204,6 +204,7 @@ Mis expedientes | `www1.agenciatributaria.gob.es/wlpl/TEWV-CORE/ResumenVlt` |
 Mis últimos accesos | `www1.agenciatributaria.gob.es/wlpl/ADHT-AUTH/UltimasConexionesW` |
 Mi área personal | `sede.agenciatributaria.gob.es/Sede/mi-area-personal.html` |
 Simulador 303 2026 (без входа) | `www2.agenciatributaria.gob.es/wlpl/A303-FWME/E2026/OPEN/index.zul` |
+Instrucciones модели 130 (без входа; проверено 2026-10-10) | `sede.agenciatributaria.gob.es/Sede/impuestos-tasas/impuesto-sobre-renta-personas-fisicas/modelo-130-irpf______esionales-estimacion-directa-fraccionado_/instrucciones.html` |
 Asientos registrales | `www1.agenciatributaria.gob.es/wlpl/REGD-JDIT/SvRegMisAsiIntQue` |
 Calendario del contribuyente | `sede.agenciatributaria.gob.es/Sede/en_gb/calendario-contribuyente.html` |
 Calendario — iCalendar (подписка) | `sede.agenciatributaria.gob.es/Sede/en_gb/ayuda/calendario-contribuyente/icalendar.html` |

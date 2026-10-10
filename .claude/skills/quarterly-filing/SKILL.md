@@ -46,20 +46,31 @@ python3 -c "
 income_q   = 0.00   # доход за квартал
 income_ytd = 0.00   # доход с 1 января
 exp_ytd    = 0.00   # расходы с 1 января (все деловые)
-paid_prev  = 0.00   # уплачено по 130 в прошлых кварталах года
-reten      = 0.00   # retenciones
+prev_c07   = 0.00   # Σ ПОЛОЖИТЕЛЬНЫХ casillas 07 поданных 130 прошлых кварталов года
+                    #   (не 19 и не «уплачено»: неоплаченный 130 тоже входит)
+prev_c16   = 0.00   # Σ casillas 16 тех же 130
+reten      = 0.00   # retenciones с 1 января
+c13_in     = 0.00   # minoración art. 110.3.c, если положена
+neg19_in   = 0.00   # невычтенные отрицательные 19 прошлых кварталов года, без знака
+c16_in     = 0.00   # вычет по ипотеке, если есть право
+c18        = 0.00   # только для complementaria: результат ранее поданной 130 за период
 vat_base   = 0.00   # база расходов с испанским НДС за квартал
 vat_cuota  = 0.00   # входящий НДС за квартал
 vat_credit = 0.00   # накопленный кредит из прошлых периодов
 
 neto = round(income_ytd - exp_ytd, 2)
 c04  = round(neto * 0.20, 2) if neto > 0 else 0.00
-c07  = round(c04 - paid_prev - reten, 2)
-# ⚠️ 19 == 07 только когда casillas 14 / 17 / 18 пусты: нет minoración por art. 110.3.c,
-#    нет переноса отрицательных результатов прошлых кварталов, нет вычета по ипотеке.
-#    Иначе цепочка длиннее — разметка в knowledge/modelo-130-irpf.md
-c19  = c07
-print(f'130: 01={income_ytd:.2f} 02={exp_ytd:.2f} 03={neto:.2f} 04={c04:.2f} 05={paid_prev:.2f} 06={reten:.2f} 07={c07:.2f} 19={c19:.2f}')
+c05  = round(prev_c07 - prev_c16, 2)
+c07  = round(c04 - c05 - reten, 2)
+# Раздел III — по Instrucciones, разметка в knowledge/modelo-130-irpf.md
+c12  = max(c07, 0.00)                                   # раздел II пуст
+c14  = round(c12 - c13_in, 2)
+c15  = round(min(neg19_in, c14), 2) if c14 > 0 else 0.00
+c16  = round(min(c16_in, c14 - c15), 2) if c14 > 0 else 0.00   # 15 + 16 не больше 14
+c17  = round(c14 - c15 - c16, 2)
+c19  = round(c17 - c18, 2)
+print(f'130: 01={income_ytd:.2f} 02={exp_ytd:.2f} 03={neto:.2f} 04={c04:.2f} 05={c05:.2f} 06={reten:.2f} 07={c07:.2f}')
+print(f'130: 12={c12:.2f} 13={c13_in:.2f} 14={c14:.2f} 15={c15:.2f} 16={c16:.2f} 17={c17:.2f} 18={c18:.2f} 19={c19:.2f}')
 
 c45  = round(vat_cuota, 2)
 c46  = round(-c45, 2)

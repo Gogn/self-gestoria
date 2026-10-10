@@ -52,7 +52,8 @@ expenses:
 cumulative:
   income_ytd_before_this_quarter: 0.00   # доход с 1 января до начала этого квартала
   expenses_ytd_before_this_quarter: 0.00
-  modelo_130_paid_this_year: 0.00        # → casilla 05 модели 130
+  modelo_130_prev_c07_positive: 0.00     # Σ положительных casillas 07 поданных 130 года
+  modelo_130_prev_c16: 0.00              # Σ casillas 16 тех же 130; 05 = c07 − c16
   retenciones_ytd: 0.00                  # → casilla 06 модели 130
   vat_credit_carried_forward: 371.49     # → casilla 110 модели 303
 
