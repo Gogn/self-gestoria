@@ -47,9 +47,10 @@ casilla 120, — это `[практика]`, а не норма.
 | Акт | Что регулирует | BOE (консолидированный текст) |
 |---|---|---|
 **Ley 58/2003 General Tributaria** (LGT) | Каркас всего: сроки, *período ejecutivo*, recargos, рассрочки (art. 65), гарантии и их освобождение (art. 82), проценты по задержанным возвратам (art. 31), зачёт долга (arts. 71–73), санкции, прескрипция, информационные обязанности (arts. 93–94) | `https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186` |
-**Ley 35/2006 IRPF** (LIRPF) | Рендимьенто нето, вычитаемые расходы, *estimación directa* и её *simplificada*, шкала. **art. 79.e** — из налога вычитаются авансы; **art. 99.1** — аванс считается налоговым долгом; **art. 103** — срок возврата по Renta и проценты за задержку | `https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764` |
+**Ley 35/2006 IRPF** (LIRPF) | Рендимьенто нето, вычитаемые расходы, *estimación directa* и её *simplificada*, шкала. **art. 14.1.b** — доход деятельности вменяется по правилам IS; **art. 28.1** — rendimiento neto по нормам IS; **art. 30.2.4ª** — предел 2 000 €/год для провизий и gastos de difícil justificación; **art. 32.2** — reducción при работе на одного клиента (условия — 32.2.2º); **DA 56ª** — 7 % difícil justificación за 2023; **art. 79.e** — из налога вычитаются авансы; **art. 99.1** — аванс считается налоговым долгом; **art. 103** — срок возврата по Renta и проценты за задержку | `https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764` |
 **Ley 27/2014 Impuesto sobre Sociedades** (LIS) | Для autónomo — через LIRPF art. 14.1.b: **art. 11.1** — расходы и доходы деятельности относятся к году начисления, независимо от даты оплаты | `https://www.boe.es/buscar/act.php?id=BOE-A-2014-12328` |
-**Ley 37/1992 IVA** (LIVA) | НДС. 👉 Ключевое для профиля с зарубежным клиентом — **правила локализации услуг, art. 69** | `https://www.boe.es/buscar/act.php?id=BOE-A-1992-28740` |
+**Ley 37/1992 IVA** (LIVA) | НДС. 👉 Ключевое для профиля с зарубежным клиентом — **правила локализации услуг, art. 69**; **art. 75.Uno.2º** — devengo услуг: когда услуга оказана; **art. 79.Once** — сумма в валюте пересчитывается по курсу Banco de España на дату devengo | `https://www.boe.es/buscar/act.php?id=BOE-A-1992-28740` |
+**Ley 46/1998 sobre la Introducción del Euro** | **art. 36** — курсы ЕЦБ, ежедневно публикуемые Banco de España в BOE, имеют статус официальных (*cambios oficiales*). Проверено по формулировке ежедневной резолюции, например `https://www.boe.es/diario_boe/txt.php?id=BOE-A-2026-21092`; текст самой статьи не сверялся | идентификатор закона не установлен — искать на boe.es по названию |
 **Ley 39/2015 Procedimiento Administrativo Común** | Общий административный порядок: исчисление сроков (art. 30, *días hábiles*), представительство (art. 5), электронный реестр доверенностей (art. 6) | `https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565` |
 
 ## Регламенты
@@ -58,8 +59,10 @@ casilla 120, — это `[практика]`, а не норма.
 |---|---|---|
 **RD 1065/2007 (RGAT)** | Процедуры управления и инспекции. 🔴 **art. 74** — условия справки *estar al corriente* (см. `estar-al-corriente.md`) | `https://www.boe.es/buscar/act.php?id=BOE-A-2007-15984` |
 **RD 939/2005 Reglamento General de Recaudación** | Взыскание: apremio, рассрочки, гарантии, погашение. **art. 52.2** — зачёт возвратов при рассрочке без гарантии; **arts. 55–59** — зачёт (*compensación*) | `https://www.boe.es/buscar/act.php?id=BOE-A-2005-14803` |
-**RD 439/2007 (RIRPF)** | Регламент IRPF. **art. 110** — расчёт авансовых платежей и *minoración* в модели 130 | `https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820` |
+**RD 439/2007 (RIRPF)** | Регламент IRPF. **art. 7** — вменение дохода деятельности; опция *criterio de cobros y pagos* (7.2); **art. 30.2ª** — 5 % gastos de difícil justificación; **art. 110** — расчёт авансовых платежей и *minoración* в модели 130 | `https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820` |
 **RD 1624/1992 (RIVA)** | Регламент НДС: вычеты, книги учёта, сроки | `https://www.boe.es/buscar/act.php?id=BOE-A-1992-28925` |
+**RD 1619/2012 Reglamento de facturación** | **art. 5** — счёт за исполнителя выставляет клиент или третье лицо: ответственность остаётся на исполнителе; условия и уведомление AEAT; **art. 12** — счёт в любой валюте, НДС в евро по курсу LIVA art. 79.Once | `https://www.boe.es/buscar/act.php?id=BOE-A-2012-14696` |
+**RD 1514/2007 Plan General de Contabilidad** (PGC) | Через LIS art. 11.1 и LIRPF art. 28.1. **NRV 11ª** — операция в валюте пересчитывается по курсу на дату операции (допускается средний за период до месяца); курсовые разницы при расчёте — в результат года | `https://www.boe.es/buscar/act.php?id=BOE-A-2007-19884` |
 
 ## Чего здесь нет и почему
 
