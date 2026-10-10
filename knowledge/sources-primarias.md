@@ -47,7 +47,7 @@ casilla 120, — это `[практика]`, а не норма.
 | Акт | Что регулирует | BOE (консолидированный текст) |
 |---|---|---|
 **Ley 58/2003 General Tributaria** (LGT) | Каркас всего: сроки, *período ejecutivo*, recargos, рассрочки (art. 65), гарантии и их освобождение (art. 82), проценты по задержанным возвратам (art. 31), зачёт долга (arts. 71–73), санкции, прескрипция, информационные обязанности (arts. 93–94) | `https://www.boe.es/buscar/act.php?id=BOE-A-2003-23186` |
-**Ley 35/2006 IRPF** (LIRPF) | Рендимьенто нето, вычитаемые расходы, *estimación directa* и её *simplificada*, шкала. **art. 103** — срок возврата по Renta и проценты за задержку | `https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764` |
+**Ley 35/2006 IRPF** (LIRPF) | Рендимьенто нето, вычитаемые расходы, *estimación directa* и её *simplificada*, шкала. **art. 79.e** — из налога вычитаются авансы; **art. 99.1** — аванс считается налоговым долгом; **art. 103** — срок возврата по Renta и проценты за задержку | `https://www.boe.es/buscar/act.php?id=BOE-A-2006-20764` |
 **Ley 27/2014 Impuesto sobre Sociedades** (LIS) | Для autónomo — через LIRPF art. 14.1.b: **art. 11.1** — расходы и доходы деятельности относятся к году начисления, независимо от даты оплаты | `https://www.boe.es/buscar/act.php?id=BOE-A-2014-12328` |
 **Ley 37/1992 IVA** (LIVA) | НДС. 👉 Ключевое для профиля с зарубежным клиентом — **правила локализации услуг, art. 69** | `https://www.boe.es/buscar/act.php?id=BOE-A-1992-28740` |
 **Ley 39/2015 Procedimiento Administrativo Común** | Общий административный порядок: исчисление сроков (art. 30, *días hábiles*), представительство (art. 5), электронный реестр доверенностей (art. 6) | `https://www.boe.es/buscar/act.php?id=BOE-A-2015-10565` |
