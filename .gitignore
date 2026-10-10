@@ -51,6 +51,7 @@ datos-fiscales*
 
 # Системное
 .DS_Store
+__pycache__/
 Thumbs.db
 .idea/
 .vscode/

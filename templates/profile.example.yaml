@@ -42,7 +42,7 @@ profile:
   iae_codes: ["763"]
   iae_codes_source: declared         # только из datos censales, в декларациях нет
 
-  region: cataluna
+  region: madrid
   region_source: asked
 
   clients:

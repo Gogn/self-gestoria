@@ -1,6 +1,7 @@
 # Данные за квартал.
 # Скопируйте в my-data/<ГОД>-Q<N>/data.yaml и заполните.
 # Все суммы — числом с точкой как десятичным разделителем (в формах AEAT будет запятая).
+# Суммы в образце условные — как в examples/perfil-a-cliente-no-ue.md.
 
 period:
   year: 2026
@@ -11,19 +12,19 @@ period:
 income:
   - date: 2026-01-31
     invoice_no: "2026-001"
-    base_eur: 1823.28            # сумма без НДС
+    base_eur: 2000.00            # сумма без НДС
     vat_eur: 0.00                # НДС в счёте (0 для клиентов вне ЕС B2B)
     client_country: US
     client_type: legal_entity
   - date: 2026-02-28
     invoice_no: "2026-002"
-    base_eur: 1823.28
+    base_eur: 2000.00
     vat_eur: 0.00
     client_country: US
     client_type: legal_entity
   - date: 2026-03-31
     invoice_no: "2026-003"
-    base_eur: 1823.29
+    base_eur: 2000.00
     vat_eur: 0.00
     client_country: US
     client_type: legal_entity
@@ -32,15 +33,15 @@ income:
 expenses:
   - date: 2026-02-14
     concept: "подписка на софт"
-    base_eur: 276.00
-    vat_eur: 57.96               # испанский НДС
+    base_eur: 300.00
+    vat_eur: 63.00               # испанский НДС
     has_spanish_vat: true        # → попадёт в casillas 28/29 модели 303
     has_full_factura: true       # без полной factura вычет НДС невозможен
     deductible_irpf: true        # → попадёт в casilla 02 модели 130
 
   - date: 2026-01-31
     concept: "cuota de autónomos (RETA), январь"
-    base_eur: 249.94
+    base_eur: 250.00
     vat_eur: 0.00
     has_spanish_vat: false       # взносы НДС не содержат
     has_full_factura: true
@@ -55,7 +56,7 @@ cumulative:
   modelo_130_prev_c07_positive: 0.00     # Σ положительных casillas 07 поданных 130 года
   modelo_130_prev_c16: 0.00              # Σ casillas 16 тех же 130; 05 = c07 − c16
   retenciones_ytd: 0.00                  # → casilla 06 модели 130
-  vat_credit_carried_forward: 371.49     # → casilla 110 модели 303
+  vat_credit_carried_forward: 400.00     # → casilla 110 модели 303
 
 # --- ОПЛАТА -------------------------------------------------------------
 payment:

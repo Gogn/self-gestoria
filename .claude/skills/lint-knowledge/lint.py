@@ -3,6 +3,7 @@
 
 Запуск из корня репозитория:
     python3 .claude/skills/lint-knowledge/lint.py [--today YYYY-MM-DD] [--stale-months N]
+                                                  [--min-amount EUR]
 
 Код выхода: 1 — есть 🔴, 0 — нет.
 Смысловые проверки (противоречия, непомеченные утверждения) делает агент по SKILL.md:
@@ -50,6 +51,13 @@ PRIVACY = [
     ("13-значный номер (justificante?)", re.compile(r"\b\d{13}\b")),
 ]
 PRIVACY_ALLOW = {"noreply@anthropic.com"}
+
+# Денежная сумма: 2.395,87 · 2 395,87 · 849,79 · 1634.04 (YAML). Даты вида 15.04.2026 не
+# ловятся — после «15.04» идёт «.2».
+MONEY = re.compile(r"(?<![\d.,])(\d{1,3}(?:[. \u00a0\u202f]\d{3})+,\d{2}|\d{1,6},\d{2}|\d{1,6}\.\d{2})(?![\d,]|\.\d)")
+# Нормативные суммы, которые законно встречаются и в my-data/, и в базе.
+PUBLIC_AMOUNTS = {300506, 66014}  # порог 347; лимит вычета по ипотеке в 130
+PRIVATE_TEXT = {".md", ".yaml", ".yml", ".txt"}
 
 PERCENT = re.compile(r"(?<![\d,.])(\d{1,3}(?:[,.]\d+)?)\s?%")
 EURO = re.compile(r"(?<![\d,.])(\d{1,3}(?:[ .]\d{3})*(?:,\d{1,2})?)\s?€")
@@ -163,7 +171,7 @@ def check_header(path, text, today, stale_months, r):
             r.add("W", f"«Актуально на» старше {stale_months} мес.", f"{name}: {date[0]}-{date[1]:02d} ({age} мес.)")
         if age < 0:
             r.add("E", "«Актуально на» в будущем", f"{name}: {date[0]}-{date[1]:02d}")
-    if not any(l.startswith("> Перепроверять:") for l in head):
+    if not any(l.startswith("> Перепроверять") for l in head):
         r.add("W", "Нет строки «> Перепроверять:» в шапке", name)
     if len(CASILLA.findall(text)) >= 3 and not any(re.search(r"casillas.*20\d\d|20\d\d.*casillas", l) for l in head):
         r.add("W", "Много номеров casillas, но в шапке не указан год формы", name)
@@ -239,6 +247,49 @@ def check_privacy(path, text, r):
                 r.add("E", "Похоже на личные данные в публичном файле", f"{rel(path)}:{n} {label}: {m.group(0)}")
 
 
+def cents(s):
+    s = s.replace("\u00a0", " ").replace("\u202f", " ")
+    if "," in s:
+        whole, frac = s.split(",")
+        return int(re.sub(r"[ .]", "", whole)) * 100 + int(frac)
+    whole, frac = s.split(".")
+    return int(whole) * 100 + int(frac)
+
+
+def private_amounts(min_amount):
+    """Суммы из my-data/ → первый файл, где встретились. Круглые (,00) пропускаются: так
+    выглядят и условные примеры, и нормативные пороги, — иначе слишком много шума."""
+    base = ROOT / "my-data"
+    found = {}
+    if not base.is_dir():
+        return None
+    for p in sorted(base.rglob("*")):
+        if p.suffix not in PRIVATE_TEXT or not p.is_file() or p.stat().st_size > 2_000_000:
+            continue
+        for m in MONEY.finditer(p.read_text(encoding="utf-8", errors="ignore")):
+            c = cents(m.group(1))
+            if c % 100 and c >= min_amount * 100 and c not in PUBLIC_AMOUNTS:
+                found.setdefault(c, p)
+    return found
+
+
+def check_private_amounts(files, min_amount, r):
+    """Реальная сумма из my-data/ в публичном файле — утечка, даже без имени и NIF."""
+    private = private_amounts(min_amount)
+    if private is None:
+        r.add("W", "my-data/ не найдена — сверка сумм с личными данными пропущена", "—")
+        return
+    for p in files:
+        if p.suffix not in {".md", ".yaml", ".yml", ".json"}:
+            continue
+        for n, line in enumerate(p.read_text(encoding="utf-8").split("\n"), 1):
+            for m in MONEY.finditer(line):
+                src = private.get(cents(m.group(1)))
+                if src:
+                    r.add("E", "Сумма из my-data/ в публичном файле",
+                          f"{rel(p)}:{n} {m.group(1)} (есть в {rel(src)})")
+
+
 def check_index(knowledge, r, incoming):
     claude = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
     for p in knowledge:
@@ -300,6 +351,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--today", type=dt.date.fromisoformat, default=dt.date.today())
     ap.add_argument("--stale-months", type=int, default=6)
+    ap.add_argument("--min-amount", type=float, default=100,
+                    help="сверять с my-data/ суммы от этой величины, €")
     a = ap.parse_args()
 
     r = Report()
@@ -317,6 +370,7 @@ def main():
     for p in files:
         if p.suffix in {".md", ".yaml", ".yml", ".py", ".json"}:
             check_privacy(p, p.read_text(encoding="utf-8"), r)
+    check_private_amounts(files, a.min_amount, r)
     check_index(knowledge, r, incoming)
 
     print(f"LINT базы знаний · {a.today.isoformat()} · файлов: {len(files)}, из них knowledge/: {len(knowledge)}")
